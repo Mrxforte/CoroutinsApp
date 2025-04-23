@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -62,6 +64,37 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+
+//            parallel shakilda foydalanish
+            CoroutineScope(Dispatchers.IO).launch {
+
+                suspend fun bir(): Int {
+                    delay(3000)
+                    println("Bir")
+                    return 1
+                }
+
+                suspend fun ikki(): Int {
+                    delay(1000)
+                    println("Ikki")
+                    return 2
+                }
+
+                val one = async {
+
+                    bir()
+
+                }
+
+                val two = async {
+                    ikki()
+
+                }
+                val result = one.await() + two.await()
+//                    calling the one and two
+
+            }
         }
+
     }
 }
